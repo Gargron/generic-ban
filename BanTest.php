@@ -55,4 +55,11 @@ class BanTest extends PHPUnit_Framework_TestCase
 
 		$this->assertTrue(Ban::is('0.0.0.5'));
 	}
+
+	public function testIsWhenOnlyIPnot()
+	{
+		Ban::undo(8);
+
+		$this->assertFalse(Ban::is('0.0.0.5'));
+	}
 }

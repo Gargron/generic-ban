@@ -136,12 +136,26 @@ class Ban
 	 * Unban a user
 	 *
 	 * @param  integer
+	 * @param  boolean
 	 * @return void
 	 */
 
-	public static function undo($id)
+	public static function undo($id, $with_alts = false)
 	{
 		self::store()->del('ban:id:' . $id);
+
+		foreach(self::ips($id) as $ip)
+		{
+			self::store()->del('ban:ip:' . $ip);
+		}
+
+		if($with_alts)
+		{
+			foreach(self::alts($id) as $alt_id)
+			{
+				self::store()->del('ban:id:' . $alt_id);
+			}
+		}
 	}
 
 	/**
