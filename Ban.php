@@ -133,6 +133,25 @@ class Ban
 	}
 
 	/**
+	 * Ban an IP address
+	 *
+	 * @param  string
+	 * @param  mixed
+	 * @param  integer
+	 * @return void
+	 */
+
+	public static function make_only_ip($ip, $data, $expire = 0)
+	{
+		self::store()->set('ban:ip:' . $ip, json_encode($data));
+
+		if($expire > 0)
+		{
+			self::store()->expire('ban:ip:' . $ip, $expire);
+		}
+	}
+
+	/**
 	 * Unban a user
 	 *
 	 * @param  integer
@@ -156,6 +175,16 @@ class Ban
 				self::store()->del('ban:id:' . $alt_id);
 			}
 		}
+	}
+
+	/**
+	 * TODO
+	 *
+	 */
+
+	public static function flush()
+	{
+		# TODO
 	}
 
 	/**
